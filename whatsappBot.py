@@ -14,6 +14,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
+
 BASE_URL = "https://web.whatsapp.com/"
 CHAT_URL = "https://web.whatsapp.com/send?phone={phone}&text&type=phone_number&app_absent=1"
 
@@ -21,9 +22,7 @@ chrome_options = Options()
 chrome_options.add_argument("start-maximized")
 user_data_dir = ''.join(random.choices(string.ascii_letters, k=8))
 chrome_options.add_argument("--user-data-dir=selenium")
-#chrome_options.add_argument("--incognito")
-
-closeapp = False
+# chrome_options.add_argument("--incognito")
 
 service = Service(executable_path=ChromeDriverManager().install())
 
@@ -35,7 +34,9 @@ driver.maximize_window()
 
 load_dotenv()
 
-message = 'First line,' + Keys.SHIFT + Keys.ENTER + Keys.SHIFT + 'second line'  + Keys.SHIFT + Keys.ENTER + Keys.SHIFT +'message from bot at time: ' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+message = 'First line,' + Keys.SHIFT + Keys.ENTER + Keys.SHIFT + 'second line' + Keys.SHIFT + Keys.ENTER + \
+    Keys.SHIFT + 'message from bot at time: ' + \
+    datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 phone = os.getenv("PHONE_NUMBER_ME")
 print(phone)
 
@@ -54,6 +55,13 @@ input_box = WebDriverWait(driver, 60).until(
 input_box.send_keys(message)
 input_box.send_keys(Keys.ENTER)
 
+time.sleep(3)
+
+messages = driver.find_elements(By.CLASS_NAME, "_21Ahp")
+for message in messages:
+    print(message.text + '\n')
+time.sleep(1)  # wait 1 second before checking again
+
 
 time.sleep(100)
-
+driver.quit()
