@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Byte-compiled / optimized / DLL files
+selenium
+screenshot_*
+commands*
+
 # C extensions
 *.so
 
