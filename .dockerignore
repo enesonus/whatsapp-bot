@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# But not these files...
+!main.py
+!requirements.txt
+!templates

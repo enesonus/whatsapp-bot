@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: selenium-grid
+  labels:
+    app: selenium-grid
+    name: selenium-grid
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: selenium-grid
+  template:
+    metadata:
+      labels:
+        app: selenium-grid
+    spec:
+      containers:
+        - name: selenium-hub
+          image: seleniarm/standalone-chromium:113.0
+          env:
+            - name: SE_SCREEN_WIDTH
+              value: "1920"
+            - name: SE_SCREEN_HEIGHT
+              value: "1080"
+            # - name: SE_START_NO_VNC
+            #   value: "false"
+            # - name: SE_START_VNC
+            #   value: "false"
+            - name: SE_NODE_MAX_SESSIONS
+              value: "1"
+          ports:
+            - containerPort: 4444
+              protocol: TCP
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: selenium-grid
+  labels:
+    name: selenium-grid
+spec:
+  selector:
+    app: selenium-grid
+  ports:
+    - name: web
+      protocol: TCP
+      port: 4444
+      targetPort: 4444
+    - name: vnc
+      protocol: TCP
+      port: 7900
+      targetPort: 7900
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: selenium-grid-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: bot.enesonus.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /vnc
+            backend:
+              service:
+                name: selenium-grid
+                port:
+                  number: 7900

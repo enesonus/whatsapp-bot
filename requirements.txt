@@ -2,3 +2,4 @@ schedule==1.1.0
 python-dotenv==0.19.1
 webdriver_manager==3.8.6
 selenium==4.9.0
+flask==2.3.0

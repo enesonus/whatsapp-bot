@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whatsapp-bot
+  labels:
+    app: whatsapp-bot
+    name: whatsapp-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: whatsapp-bot
+  template:
+    metadata:
+      labels:
+        app: whatsapp-bot
+    spec:
+      containers:
+        - name: whatsapp-bot
+          image: eonus/whatsapp-bot:v0.1.17
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: IP_ADDR
+              value: selenium-grid
+            - name: PHONE_NUMBER_ME
+              value: "905549707942"
+          ports:
+            - containerPort: 4444
+              protocol: TCP
+          resources:
+            limits:
+              memory: 500Mi
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whatsapp-bot
+  labels:
+    name: whatsapp-bot
+spec:
+  selector:
+    app: whatsapp-bot
+  ports:
+    - name: web
+      protocol: TCP
+      port: 7575
+      targetPort: 7575
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wp-bot-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: bot.enesonus.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /bot
+            backend:
+              service:
+                name: whatsapp-bot
+                port:
+                  number: 7575

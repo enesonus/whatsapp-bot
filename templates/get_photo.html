@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR Image</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1 id="p1">
+      PLEASE WAIT FOR QR AND SCAN IT WITH YOUR PHONE'S WHATSAPP APP
+    </h1>
+    <img id="QR" src="" />
+
+    <script>
+      $.get("/bot/phone_num", function (response) {
+        console.log(response);
+        var filename = "/bot/photo?num=" + response;
+        document.getElementById("QR").src = filename;
+      });
+    </script>
+  </body>
+</html>
