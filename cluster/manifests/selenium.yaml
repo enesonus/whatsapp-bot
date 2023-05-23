@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: selenium-hub
-          image: seleniarm/standalone-chromium:113.0
+          image: selenium/standalone-chrome:113.0
           env:
             - name: SE_SCREEN_WIDTH
               value: "1366"
@@ -30,14 +30,14 @@ spec:
             # - name: SE_START_VNC
             #   value: "false"
             - name: SE_NODE_MAX_SESSIONS
-              value: "1"
+              value: "5"
           ports:
             - containerPort: 4444
               protocol: TCP
           resources:
             limits:
               memory: 2Gi
-              cpu: "3000m"
+              cpu: "2000m"
 ---
 apiVersion: v1
 kind: Service
