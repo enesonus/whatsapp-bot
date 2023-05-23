@@ -1,6 +1,4 @@
-# Containerized Whatsapp message scheduler bot
-
-## Designing the application & application flow
+# Designing the application & application flow
 
 First of all let’s talk about the design of our application. There are certain things we should think about if we want to create a user-friendly application. Our application will read messages that are sent to user's own chat, using Whatsapp's [Message Yourself](https://faq.whatsapp.com/1785465805163404/?cms_platform=web) feature and schedule messages to send on behalf of the user. We have 4 important task to do
 
@@ -435,4 +433,5 @@ driver = webdriver.Remote(
 'http://localhost:4444', options=driver_options)
 ```
 
-Now we constructed our app and it is ready to use.
+Now we constructed our app and it is ready to use. Go to [the next page](./2-running-the-bot.md) to see how we
+can run it in Docker.
