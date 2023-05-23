@@ -11,9 +11,9 @@
     <img id="QR" src="" />
 
     <script>
-      $.get("/bot/phone_num", function (response) {
+      $.get("/phone_num", function (response) {
         console.log(response);
-        var filename = "/bot/photo?num=" + response;
+        var filename = "/photo?num=" + response;
         document.getElementById("QR").src = filename;
       });
     </script>
