@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: whatsapp-bot
-          image: eonus/whatsapp-bot:v0.1.17
+          image: eonus/whatsapp-bot:v0.1.22
           imagePullPolicy: IfNotPresent
           env:
             - name: IP_ADDR
@@ -51,15 +51,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: wp-bot-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: bot.enesonus.com
       http:
         paths:
           - pathType: Prefix
-            path: /bot
+            path: /
             backend:
               service:
                 name: whatsapp-bot

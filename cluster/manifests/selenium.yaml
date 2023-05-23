@@ -20,9 +20,11 @@ spec:
           image: seleniarm/standalone-chromium:113.0
           env:
             - name: SE_SCREEN_WIDTH
-              value: "1920"
+              value: "1366"
             - name: SE_SCREEN_HEIGHT
-              value: "1080"
+              value: "768"
+            - name: SE_VNC_NO_PASSWORD
+              value: "1"
             # - name: SE_START_NO_VNC
             #   value: "false"
             # - name: SE_START_VNC
@@ -35,7 +37,7 @@ spec:
           resources:
             limits:
               memory: 2Gi
-              cpu: "1000m"
+              cpu: "3000m"
 ---
 apiVersion: v1
 kind: Service
@@ -60,15 +62,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: selenium-grid-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    - host: bot.enesonus.com
+    - host: vnc.enesonus.com
       http:
         paths:
           - pathType: Prefix
-            path: /vnc
+            path: /
             backend:
               service:
                 name: selenium-grid
