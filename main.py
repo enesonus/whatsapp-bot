@@ -108,7 +108,7 @@ def whatsapp_messages():
 
     driver_options = Options()
 
-    driver_options.add_argument("--headless=new")
+    # driver_options.add_argument("--headless=new")
     # driver_options.add_argument("--no-sandbox")
 
     driver_options.add_argument("--disable-dev-shm-usage")
