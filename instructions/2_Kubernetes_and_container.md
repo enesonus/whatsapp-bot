@@ -142,7 +142,7 @@ spec:
 We will create a kind cluster with extraPortMappings and node-labels so that we can use Ingress on our URL properly.
 
 ```bash
-cat <<EOF | kind create cluster --wa --config=-
+cat <<EOF | kind create cluster --wait=5m --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
