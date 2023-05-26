@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <form action="/qr-code" method="get">
+      <label for="phone">Phone Number without country code:</label><br />
+      <input
+        type="tel"
+        placeholder="e.g. 533 456 7891"
+        id="phone"
+        name="phone"
+      /><br /><br />
+      <label for="phone">Your country's phone code:</label><br />
+      <input
+        type="text"
+        placeholder="e.g. 1 , 90 , 44"
+        id="country-phone-code"
+        name="country-phone-code"
+      /><br /><br />
+      <input type="submit" disabled="true" id="submit-phone" value="Submit" />
+    </form>
+    <script>
+      console.log("hello");
+      const submitButton = document.getElementById("submit-phone");
+      const phoneNumInput = document.getElementById("phone");
+      const countryCodeInput = document.getElementById("country-phone-code");
+
+      phoneValid = false;
+      countryValid = false;
+      function checkPhoneNum() {
+        const phoneNumberRegex = /^\d{3}[-\s]?\d{3}[-\s]?\d{4}$/i;
+        phoneValid = phoneNumberRegex.test(phoneNumInput.value);
+        console.log(phoneValid);
+
+        if (phoneValid) {
+          if (countryValid) {
+            submitButton.disabled = false;
+          }
+          phoneNumInput.style.backgroundColor = "#aae6ae";
+        } else {
+          phoneNumInput.style.backgroundColor = "#f56278";
+        }
+        return phoneValid;
+      }
+      function checkCountryCode() {
+        const countryCodeRegex = /^\d{1,3}$/;
+        countryValid = countryCodeRegex.test(countryCodeInput.value);
+
+        if (countryValid) {
+          countryCodeInput.style.backgroundColor = "#aae6ae";
+          if (phoneValid) {
+            submitButton.disabled = false;
+          }
+        } else {
+          countryCodeInput.style.backgroundColor = "#f56278";
+        }
+      }
+      countryCodeInput.addEventListener("input", checkCountryCode);
+      phoneNumInput.addEventListener("input", checkPhoneNum);
+    </script>
+  </body>
+</html>
