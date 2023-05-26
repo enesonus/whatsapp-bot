@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: whatsapp-bot
-          image: eonusdev/whatsapp-bot:v0.1.24
+          image: eonusdev/whatsapp-bot:v0.1.29
           imagePullPolicy: IfNotPresent
           env:
             - name: IP_ADDR
@@ -25,7 +25,7 @@ spec:
             - name: PHONE_NUMBER_ME
               value: "905549707942"
           ports:
-            - containerPort: 4444
+            - containerPort: 7575
               protocol: TCP
           resources:
             limits:
@@ -51,13 +51,20 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: wp-bot-ingress
+  annotations:
+    cert-manager.io/issuer: "letsencrypt-prod"
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - bot.eonus.dev
+      secretName: wp-bot-itself
   rules:
-    - host: bot.enesonus.com
+    - host: bot.eonus.dev
       http:
         paths:
-          - pathType: Prefix
-            path: /
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: whatsapp-bot
