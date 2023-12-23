@@ -1,5 +1,8 @@
 # WhatsApp Bot for Scheduled Messages
 
+> [!CAUTION]  
+> This bot is currently not working properly due to changes in web.whatsapp and is not currently maintaned. If you want to contribute feel free to open a PR.
+
 WhatsApp is an instant messaging application that's mostly used in mobile
 phones. It allows you to send a message any time of the day but you cannot
 schedule a message to be sent at a certain time.
